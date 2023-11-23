@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Navbar } from './components/Navbar'
-
+import {registerWork} from '../helpers/work'
 export const FormTrabajo = () => {
+    
     const [formData, setFormData] = useState({
         cargo: '',
         descripcion: '',
@@ -15,15 +16,28 @@ export const FormTrabajo = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        if (name === 'responsabilidades' || name === 'requisitos') {
+           
+            const arrayValue = value.split(',').map(item => item);
+            setFormData({ ...formData, [name]: arrayValue });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e)  => {
         e.preventDefault();
-        // Aquí puedes agregar la lógica para manejar el envío del formulario
         console.log('Formulario enviado:', formData);
+        const response = await registerWork(
+            formData.cargo,
+            formData.descripcion,
+            formData.responsabilidades,
+            formData.requisitos,
+            formData.lugar,
+            formData.fechaVencimiento
+        );
+        console.log(response);
     };
-
     const obtenerFechaActual = () => {
         const fechaActual = new Date();
         const mes = fechaActual.getMonth() + 1;
@@ -31,7 +45,7 @@ export const FormTrabajo = () => {
         const fechaFormato = `${fechaActual.getFullYear()}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
         return fechaFormato;
       };
-
+    
     return (
         <>
             <Navbar />
