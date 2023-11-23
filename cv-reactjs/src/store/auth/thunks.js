@@ -10,15 +10,15 @@ export const checkingAuthentication = (nombre, password) => {
 export const startCreatingUserNodeJs = ({nombre,correo,cv,celular, password}) => {
     return async (dispatch) => {
         dispatch(checkingCredentials());
-        const user = await registerNodeJs(nombre,correo,cv,celular, passwordd);
+        const user = await registerNodeJs(nombre,correo,cv,celular, password);
         if (!user.nombre) {
             return dispatch(logout());
         }
         localStorage.setItem(
             "user",
-            JSON.stringify({ id: user.id, nombre: user.nombre })
+            JSON.stringify({ id: user.id, nombre: user.nombre, correo: user.correo })
         );
-        return dispatch(login({ id: user.id, nombre: user.nombre }));
+        return dispatch(login({ id: user.id, nombre: user.nombre, correo: user.correo }));
     };
 };
 
@@ -31,9 +31,9 @@ export const startLoginNodeJs = ({ correo, password }) => {
         }
         localStorage.setItem(
             "user",
-            JSON.stringify({ id: user.id, nombre: user.nombre })
+            JSON.stringify({ id: user.id, nombre: user.nombre, correo: user.correo })
         );
-        return dispatch(login({ id: user.id, nombre: user.nombre }));
+        return dispatch(login({ id: user.id, nombre: user.nombre, correo: user.correo }));
     };
 };
 

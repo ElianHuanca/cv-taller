@@ -1,13 +1,13 @@
 import { baseUrl } from "../const/const";
 
-export const loginNodeJs = async (nombre, password) => {
+export const loginNodeJs = async (correo, password) => {
   const resp = await fetch(`${baseUrl}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      nombre,
+      correo,
       password,
     }),
   });
@@ -16,18 +16,37 @@ export const loginNodeJs = async (nombre, password) => {
   return response;
 };
 
-export const registerNodeJs = async ( nombre, password) => {
+/*export const registerNodeJs = async (nombre, correo, cv, celular, password) => {
   const resp = await fetch(`${baseUrl}/usuarios`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({      
-      nombre,
-      password
+    body: JSON.stringify({
+      nombre, correo, cv, celular, password
     }),
   });
   const response = await resp.json();
   console.log(response);
   return response;
-};
+};*/
+
+export const registerNodeJs = async (nombre, correo, cv, celular, password) => {
+  const formData = new FormData();
+  formData.append("nombre", nombre);
+  formData.append("correo", correo);
+  formData.append("file", cv);
+  formData.append("celular", celular);
+  formData.append("password", password);
+  console.log(formData);
+  const resp = await fetch(`${baseUrl}/usuarios`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: formData
+  });
+  const response = await resp.json();
+  console.log(response);
+  return response;
+}

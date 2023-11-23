@@ -1,8 +1,9 @@
 const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
 
-
+const { uploadFileToS3 } = require('./s3');
 const Usuario = require('../models/usuario');
+const { correoExiste } = require('../helpers/db-validators');
 
 
 
@@ -30,34 +31,52 @@ const postulantesGet = async (req = request, res = response) => {
 }
 
 const personalGet = async (req = request, res = response) => {
-    
-        const query = { rol: 'Personal' };
-    
-        const usuarios = await Usuario.find(query);
-    
-        res.json({
-            usuarios
-        });
+
+    const query = { rol: 'Personal' };
+
+    const usuarios = await Usuario.find(query);
+
+    res.json({
+        usuarios
+    });
 }
 
 const usuariosPost = async (req, res = response) => {
-    const { nombre,correo,cv,celular, password } = req.body;
+    try {
+        const { nombre, correo, celular, password } = req.body;
 
-    var rol;
-    if(cv!=null){
-        rol='Postulante';
-    }else{
-        rol='Personal';
+        var rol;
+        var cv;
+        
+        if (!req.file) {
+            //return res.status(400).json({ message: 'No se proporcionó un archivo' });
+            rol = 'Personal';
+        } else {
+            const fileBuffer = req.file.buffer;
+            const fileName = req.file.originalname;
+            cv = await uploadFileToS3(fileName, fileBuffer);
+            rol = 'Postulante';
+        }
+
+        const user= await Usuario.findOne({ correo });
+        if (user) {
+            return res.status(400).json({ message: 'El correo ya está registrado' });
+        }
+
+        const usuario = new Usuario({ nombre, correo, cv, celular, password, rol });
+        // Encriptar la contraseña
+        const salt = bcryptjs.genSaltSync();
+        usuario.password = bcryptjs.hashSync(password, salt);
+
+        // Guardar en BD
+        await usuario.save();
+
+        res.json(usuario);
+
+    } catch (error) {
+        console.error('Error al procesar la solicitud:', error);
+        return res.status(500).json({ message: 'Error interno del servidor' });
     }
-    const usuario = new Usuario({ nombre,correo,cv,celular, password,rol });
-    // Encriptar la contraseña
-    const salt = bcryptjs.genSaltSync();
-    usuario.password = bcryptjs.hashSync(password, salt);
-
-    // Guardar en BD
-    await usuario.save();
-
-    res.json(usuario);
 }
 
 const usuariosPut = async (req, res = response) => {

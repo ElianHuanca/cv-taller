@@ -7,33 +7,36 @@ const { validarCampos } = require('../middlewares/validar-campos');
 const { nombreExiste, existeUsuarioPorId } = require('../helpers/db-validators');
 
 const { usuariosGet,
-        usuariosPut,
-        usuariosPost,
-        usuariosDelete
+    usuariosPut,
+    usuariosPost,
+    usuariosDelete
 } = require('../controllers/usuarios');
+const multer = require('multer');
 
 const router = Router();
+const storage = multer.memoryStorage(); // Almacena los archivos en memoria (puedes cambiarlo si quieres almacenar en disco).
+const upload = multer({ storage: storage });
+router.get('/', usuariosGet);
 
-
-router.get('/', usuariosGet );
-
-router.put('/:id',[
+router.put('/:id', [
     check('id', 'No es un ID válido').isMongoId(),
-    check('id').custom( existeUsuarioPorId ),    
+    check('id').custom(existeUsuarioPorId),
     validarCampos
-],usuariosPut );
+], usuariosPut);
 
-router.post('/',[
+router.post('/'/* , [
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-    check('password', 'El password debe de ser más de 6 letras').isLength({ min: 6 }),    
+    check('correo', 'El correo no es válido').isEmail(),
+    check('password', 'El password debe de ser más de 6 letras').isLength({ min: 6 }),
+
     //check('nombre').custom( nombreExiste ),
     validarCampos
-], usuariosPost );
+] */,upload.single('file'), usuariosPost);
 
-router.delete('/:id',[
+router.delete('/:id', [
     check('id', 'No es un ID válido').isMongoId(),
-    check('id').custom( existeUsuarioPorId ),
+    check('id').custom(existeUsuarioPorId),
     validarCampos
-],usuariosDelete );
+], usuariosDelete);
 
 module.exports = router;

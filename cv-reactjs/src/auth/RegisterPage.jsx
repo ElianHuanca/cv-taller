@@ -7,8 +7,7 @@ import { startCreatingUserNodeJs } from '../store/auth/thunks';
 export const RegisterPage = () => {
   const dispatch = useDispatch();
   const isAuthenticating = false;
-  const { ci,nombre,celular,correo, password, onInputChange } = useForm({
-    ci:"",
+  const { ci, nombre, celular, correo, password, onInputChange } = useForm({
     correo: "",
     nombre: "",
     password: "",
@@ -16,13 +15,10 @@ export const RegisterPage = () => {
   });
 
   const onSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("correo", correo);
-    formData.append("password", password);
-    formData.append("cv", event.target.files[0]);
-
-    dispatch(startCreatingUserNodeJs({ nombre, password }));
+    event.preventDefault();   
+    const cv = event.target.files[0];
+    console.log(cv);
+    dispatch(startCreatingUserNodeJs({ nombre,correo,cv,celular, password }));
   };
 
   return (
@@ -31,11 +27,7 @@ export const RegisterPage = () => {
 
       <div className='flex justify-center items-center h-full'>
         <form className='max-w-[300px] w-full mx-auto bg-white p-6 backdrop-filter backdrop-blur-md' onSubmit={onSubmit}>
-          <h2 className='text-2xl font-bold text-center mb-4'>EMBOL.</h2>
-          <div className='mb-4'>
-            <label>Carnet De Identidad</label>
-            <input className='border w-full p-2' type="text" value={ci} onChange={onInputChange} name="ci" required />
-          </div>
+          <h2 className='text-2xl font-bold text-center mb-4'>EMBOL.</h2>          
           <div className='mb-4'>
             <label>Nombre Completo</label>
             <input className='border w-full p-2' type="text" value={nombre} onChange={onInputChange} name="nombre" required />
@@ -50,7 +42,7 @@ export const RegisterPage = () => {
           </div>
           <div className='mb-4'>
             <label>Envie su CV</label>
-            <input className='border w-full p-2' type="file" name="cv" required />
+            <input className='border w-full p-2' type="file" name="files" required />
           </div>
           <div className='mb-4'>
             <label>Nro De Celular</label>
