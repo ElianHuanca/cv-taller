@@ -43,6 +43,7 @@ const personalGet = async (req = request, res = response) => {
 
 const usuariosPost = async (req, res = response) => {
     try {
+        
         const { nombre, correo, celular, password } = req.body;
 
         var rol;

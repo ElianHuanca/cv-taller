@@ -25,7 +25,6 @@ export const RegisterPage = () => {
     const selectedFiles = Array.from(event.target.files);
     setPdf(selectedFiles);
   };
-
   return (
     <div className='relative w-full h-screen bg-zinc-900/90'>
       <img className='absolute w-full h-full object-cover mix-blend-overlay' src='https://nuevaeconomia.com.bo/sitioweb/img/noticias/Embol-empresa-mayor-reputacion.png' alt="/" />
