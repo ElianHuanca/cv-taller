@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from '../hooks/useForm';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,8 @@ import { startCreatingUserNodeJs } from '../store/auth/thunks';
 export const RegisterPage = () => {
   const dispatch = useDispatch();
   const isAuthenticating = false;
-  const { ci, nombre, celular, correo, password, onInputChange } = useForm({
+  const [pdf, setPdf] = useState([]);
+  const { nombre, celular, correo, password, onInputChange } = useForm({
     correo: "",
     nombre: "",
     password: "",
@@ -15,10 +16,14 @@ export const RegisterPage = () => {
   });
 
   const onSubmit = (event) => {
-    event.preventDefault();   
-    const cv = event.target.files[0];
-    console.log(cv);
-    dispatch(startCreatingUserNodeJs({ nombre,correo,cv,celular, password }));
+    event.preventDefault();    
+    //console.log(cv);
+    dispatch(startCreatingUserNodeJs({ nombre, correo, pdf, celular, password }));
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFiles = Array.from(event.target.files);
+    setPdf(selectedFiles);
   };
 
   return (
@@ -27,7 +32,7 @@ export const RegisterPage = () => {
 
       <div className='flex justify-center items-center h-full'>
         <form className='max-w-[300px] w-full mx-auto bg-white p-6 backdrop-filter backdrop-blur-md' onSubmit={onSubmit}>
-          <h2 className='text-2xl font-bold text-center mb-4'>EMBOL.</h2>          
+          <h2 className='text-2xl font-bold text-center mb-4'>EMBOL.</h2>
           <div className='mb-4'>
             <label>Nombre Completo</label>
             <input className='border w-full p-2' type="text" value={nombre} onChange={onInputChange} name="nombre" required />
@@ -42,7 +47,7 @@ export const RegisterPage = () => {
           </div>
           <div className='mb-4'>
             <label>Envie su CV</label>
-            <input className='border w-full p-2' type="file" name="files" required />
+            <input className='border w-full p-2' type="file" name="files[]" required onChange={handleFileChange} />
           </div>
           <div className='mb-4'>
             <label>Nro De Celular</label>

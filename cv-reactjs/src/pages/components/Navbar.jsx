@@ -2,6 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const Navbar = () => {
+
+    const dispatch = useDispatch();
+
+    const onLogout = () => {
+        dispatch(startLogout());
+    };
+
     return (
         <nav className="bg-white p-4 shadow-md">
             <div className="container mx-auto flex justify-between items-center">
@@ -14,7 +21,7 @@ export const Navbar = () => {
                     <Link to="/postulaciones" className=" hover:text-gray-300">Mis Postulaciones</Link>
                     <Link to="/entrevistas" className=" hover:text-gray-300">Mis Entrevistas</Link>
                     <Link to="/perfil" className=" hover:text-gray-300">Perfil</Link>
-                    <button className=" hover:text-gray-300">Cerrar Sesión</button>
+                    <button className=" hover:text-gray-300" onClick={onLogout}>Cerrar Sesión</button>
                 </div>
             </div>
         </nav>

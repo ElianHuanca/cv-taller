@@ -31,19 +31,21 @@ export const loginNodeJs = async (correo, password) => {
   return response;
 };*/
 
-export const registerNodeJs = async (nombre, correo, cv, celular, password) => {
+export const registerNodeJs = async (nombre, correo, pdf, celular, password) => {
   const formData = new FormData();
+  pdf.forEach((file) => {
+    formData.append('file', file);
+  });
   formData.append("nombre", nombre);
-  formData.append("correo", correo);
-  formData.append("file", cv);
+  formData.append("correo", correo);  
   formData.append("celular", celular);
   formData.append("password", password);
   console.log(formData);
   const resp = await fetch(`${baseUrl}/usuarios`, {
     method: "POST",
-    headers: {
+    /* headers: {
       "Content-Type": "application/json",
-    },
+    }, */
     body: formData
   });
   const response = await resp.json();

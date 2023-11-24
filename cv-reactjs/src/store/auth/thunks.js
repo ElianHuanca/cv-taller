@@ -7,10 +7,10 @@ export const checkingAuthentication = (nombre, password) => {
     };
 };
 
-export const startCreatingUserNodeJs = ({nombre,correo,cv,celular, password}) => {
+export const startCreatingUserNodeJs = ({nombre,correo,pdf,celular, password}) => {
     return async (dispatch) => {
         dispatch(checkingCredentials());
-        const user = await registerNodeJs(nombre,correo,cv,celular, password);
+        const user = await registerNodeJs(nombre,correo,pdf,celular, password);
         if (!user.nombre) {
             return dispatch(logout());
         }

@@ -8,7 +8,7 @@ import { ListReclutamiento } from './components/ListReclutamiento'
 export const Principal = () => {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="relative h-screen">
         <img
           src="https://embolfiles01.s3.us-east-2.amazonaws.com/a2ccb508-c054-4e08-b088-e5f2e36f2675.png"
@@ -27,8 +27,8 @@ export const Principal = () => {
           <h3 className="text-lg">
             Anímate a vivir la experiencia Embol y descubre las oportunidades que tenemos para ti. Ingresa a nuestro portal de empleos: {' '}
             <a
-              href="https://embol.evaluar.com"
-              target="_blank"
+              href="http://localhost:5173/auth/login"
+              //target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline"
             >

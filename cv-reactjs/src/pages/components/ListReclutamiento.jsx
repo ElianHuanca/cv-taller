@@ -5,7 +5,7 @@ export const ListReclutamiento = () => {
         {
             id: 1,
             title: 'Postula a la vacante en:',
-            description: 'https://embol.evaluar.com. \n Revisa las vacantes disponibles y si cumples con el perfil ¡postula! Debes saber que este es el único medio habilitado para que puedas postular.',
+            description: 'Revisa las vacantes disponibles y si cumples con el perfil ¡postula! Debes saber que este es el único medio habilitado para que puedas postular.',
             imageUrl: 'https://embolfiles01.s3.us-east-2.amazonaws.com/ee64d626-1099-43d2-92ed-0128b469ff9d.png',
         },
         {
