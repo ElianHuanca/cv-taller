@@ -9,7 +9,8 @@ const { nombreExiste, existeUsuarioPorId } = require('../helpers/db-validators')
 const { usuariosGet,
     usuariosPut,
     usuariosPost,
-    usuariosDelete
+    usuariosDelete,
+    usuarioGet
 } = require('../controllers/usuarios');
 const multer = require('multer');
 
@@ -17,6 +18,11 @@ const router = Router();
 const storage = multer.memoryStorage(); // Almacena los archivos en memoria (puedes cambiarlo si quieres almacenar en disco).
 const upload = multer({ storage: storage });
 router.get('/', usuariosGet);
+router.get('/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom(existeUsuarioPorId),
+    validarCampos
+],usuarioGet);
 
 router.put('/:id', [
     check('id', 'No es un ID válido').isMongoId(),

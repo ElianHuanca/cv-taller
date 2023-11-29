@@ -2,8 +2,20 @@ const { response, request } = require('express');
 
 const Trabajo = require('../models/trabajo');
 
-const trabajosGet = async (req = request, res = response) => {
+const trabajoGet = async (req = request, res = response) => {
+    
+        const { id } = req.params;
 
+        const trabajo = await Trabajo.findById(id);
+    
+        res.json(
+            trabajo
+        );
+}
+
+
+
+const trabajosGet = async (req = request, res = response) => {    
 
     const trabajos = await Trabajo.find();
 
@@ -11,6 +23,8 @@ const trabajosGet = async (req = request, res = response) => {
         trabajos
     });
 }
+
+
 
 const trabajosPost = async (req, res = response) => {
     const { cargo, descripcion, responsabilidades, requisitos, lugar, fechaFin,personal } = req.body;
@@ -23,6 +37,7 @@ const trabajosPost = async (req, res = response) => {
 }
 
 module.exports={
+    trabajoGet,
     trabajosGet,
     trabajosPost    
 }

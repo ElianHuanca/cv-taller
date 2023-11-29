@@ -16,9 +16,9 @@ export const startCreatingUserNodeJs = ({nombre,correo,pdf,celular, password}) =
         }
         localStorage.setItem(
             "user",
-            JSON.stringify({ id: user.id, nombre: user.nombre, correo: user.correo })
+            JSON.stringify({ id: user.id, nombre: user.nombre, correo: user.correo, rol: user.rol })
         );
-        return dispatch(login({ id: user.id, nombre: user.nombre, correo: user.correo }));
+        return dispatch(login({ id: user.id, nombre: user.nombre, correo: user.correo , rol: user.rol}));
     };
 };
 
@@ -31,9 +31,9 @@ export const startLoginNodeJs = ({ correo, password }) => {
         }
         localStorage.setItem(
             "user",
-            JSON.stringify({ id: user.id, nombre: user.nombre, correo: user.correo })
+            JSON.stringify({ id: user.id, nombre: user.nombre, correo: user.correo , rol: user.rol})
         );
-        return dispatch(login({ id: user.id, nombre: user.nombre, correo: user.correo }));
+        return dispatch(login({ id: user.id, nombre: user.nombre, correo: user.correo , rol: user.rol}));
     };
 };
 

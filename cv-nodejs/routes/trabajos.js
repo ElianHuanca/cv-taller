@@ -2,7 +2,8 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { trabajosGet,
+const { trabajoGet,
+        trabajosGet,
         trabajosPost
 } = require('../controllers/trabajos');
 
@@ -10,6 +11,11 @@ const router = Router();
 
 
 router.get('/', trabajosGet );
+
+router.get('/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    validarCampos
+],trabajoGet);
 
 router.post('/',[
     check('cargo', 'El cargo es obligatorio').not().isEmpty(),

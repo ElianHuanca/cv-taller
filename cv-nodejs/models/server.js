@@ -48,7 +48,7 @@ class Server {
         this.app.use( this.paths.usuarios, require('../routes/usuarios'));
         this.app.use( this.paths.auth, require('../routes/auth'));
         this.app.use( this.paths.trabajos, require('../routes/trabajos'));
-        //this.app.use( this.paths.postulaciones, require('../routes/postulaciones'));
+        this.app.use( this.paths.postulaciones, require('../routes/postulaciones'));
         //this.app.use( this.paths.entrevistas, require('../routes/entrevistas'));
     }
 

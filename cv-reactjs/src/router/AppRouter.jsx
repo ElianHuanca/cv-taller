@@ -1,6 +1,5 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { LoginPage, RegisterPage } from "../auth/index";
-import { HomePage } from "../pages/HomePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { login, logout } from "../store/auth/authSlice";
@@ -8,7 +7,7 @@ import { Principal } from "../pages/Principal";
 import { Trabajos } from "../pages/Trabajos";
 import { FormTrabajo } from "../pages/FormTrabajo";
 import { Perfil } from "../pages/Perfil";
-import { MisPostulaciones } from "../pages/MisPostulaciones";
+import { Postulaciones } from "../pages/Postulaciones";
 import { Trabajo } from "../pages/Trabajo";
 import { Postulacion } from "../pages/Postulacion";
 import { FormEntrevista } from "../pages/FormEntrevista";
@@ -22,7 +21,7 @@ export const AppRouter = () => {
     if (!user) {
       dispatch(logout());
     } else {
-      dispatch(login({ id: user.id, nombre: user.nombre }));
+      dispatch(login({ id: user.id, nombre: user.nombre,correo: user.correo, rol: user.rol }));
     }
   }, [status]);
 
@@ -31,11 +30,11 @@ export const AppRouter = () => {
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
         <Route path="/*" element={<Trabajos />} />
-        <Route path="/oferta" element={<Trabajo />} />
+        <Route path="/trabajo/:id" element={<Trabajo />} />        
         <Route path="/crearTrabajo" element={<FormTrabajo />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/crearEntrevista" element={<FormEntrevista />} />
-        <Route path="/postulaciones" element={<MisPostulaciones />} />
+        <Route path="/postulaciones" element={<Postulaciones />} />
         <Route path="/postulacion" element={<Postulacion />} />
         {/* <Route path="/*" element={<Navigate to="/" />} /> */}
         

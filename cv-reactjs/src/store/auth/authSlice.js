@@ -13,6 +13,7 @@ export const authSlice = createSlice({
       state.id = payload.id;
       state.nombre = payload.nombre;      
       state.correo = payload.correo;      
+      state.rol = payload.rol;
     },
 
     logout: (state) => {
@@ -20,6 +21,7 @@ export const authSlice = createSlice({
       state.id = null;
       state.nombre = null;      
       state.correo = null;
+      state.rol = null;
     },
 
     checkingCredentials: (state) => {

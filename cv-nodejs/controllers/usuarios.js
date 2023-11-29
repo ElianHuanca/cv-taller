@@ -18,6 +18,17 @@ const usuariosGet = async (req = request, res = response) => {
     });
 }
 
+const usuarioGet = async (req = request, res = response) => {
+    
+        const { id } = req.params;
+    
+        const usuario = await Usuario.findById(id);
+    
+        res.json(
+            usuario
+        );
+}
+
 const postulantesGet = async (req = request, res = response) => {
 
     const query = { rol: 'Postulante' };
@@ -117,4 +128,5 @@ module.exports = {
     usuariosPost,
     usuariosPut,
     usuariosDelete,
+    usuarioGet
 }

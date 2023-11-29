@@ -2,7 +2,7 @@ import React from 'react'
 import { Navbar } from './components/Navbar'
 import { ListPostulaciones } from './components/ListPostulaciones';
 
-export const MisPostulaciones = () => {
+export const Postulaciones = () => {
     
     const oportunidades = [
         {
